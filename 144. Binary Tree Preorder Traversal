@@ -1,0 +1,16 @@
+/*
+Given the root of a binary tree, return the preorder traversal of its nodes' values.
+*/
+var preorderTraversal = function(root) {
+    let result= [];
+    function preOrder(node){
+        if(!node){
+            return
+        }
+        result.push(node.val);
+        preOrder(node.left);
+        preOrder(node.right);
+    }
+    preOrder(root);
+    return result;
+};
