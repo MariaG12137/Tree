@@ -1,0 +1,22 @@
+/*
+Given a binary search tree, write a function kthSmallest to find the kth smallest element in it.
+*/
+var kthSmallest = function(root, k) {
+    let result = 0;
+    let count = 0;
+    function inOrder(node){
+        if(!node){
+            return;
+        }
+        
+        inOrder(node.left);
+        k--;
+        if(===k){
+            return node.val;
+        }
+        
+        inOrder(node.right);
+    }
+    inOrder(root);
+    return result
+};
