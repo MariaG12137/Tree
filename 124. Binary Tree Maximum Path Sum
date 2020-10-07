@@ -1,0 +1,22 @@
+/*
+Given a non-empty binary tree, find the maximum path sum.
+
+For this problem, a path is defined as any sequence of nodes from some 
+starting node to any node in the tree along the parent-child connections. 
+The path must contain at least one node and does not need to go through the root.
+*/
+var maxPathSum = function(root) {
+    let max = -Infinity;
+    function postOrder(node){
+        if(!node){
+            return 0;
+        }
+        let left = postOrder(node.left);
+        let right = postOrder(node.right);
+        max = Math.max(max, node.val+left+right);
+        
+        return Math.max(0, node.val, node.val + Math.max(left,right));
+    }
+    postOrder(root);
+    return max;
+};
