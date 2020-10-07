@@ -1,0 +1,21 @@
+/*
+Given a binary tree, return the tilt of the whole tree.
+
+The tilt of a tree node is defined as the absolute difference between the sum of all left subtree node values and the sum of all right subtree node values. Null node has tilt 0.
+
+The tilt of the whole tree is defined as the sum of all nodes' tilt.
+*/
+var findTilt = function(root) {
+    let sum = 0;
+    function inOrder(node){
+        if(!node){
+            return 0;
+        }
+        let left = inOrder(node.left);
+        let right = inOrder(node.right);
+        sum += Math.abs(left-right);
+        return node.val + left + right; 
+    }
+    inOrder(root);
+    return sum;
+};
