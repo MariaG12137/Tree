@@ -1,0 +1,35 @@
+/*
+Given a binary tree root and an integer target, delete all the leaf nodes with value target.
+
+Note that once you delete a leaf node with value target, if it's parent node becomes a leaf node and has the value target, 
+it should also be deleted (you need to continue doing that until you can't).
+*/
+var removeLeafNodes = function(root, target) {
+    function barrel(node){
+        if(!node){
+            return false;
+        }
+        if(!node.left && !node.right && node.val === target){
+            return true;
+        }
+        return false;
+    }
+
+    
+    function delNode(node){
+        if(!node){
+            return;
+        }
+        delNode(node.left);
+        delNode(node.right);
+        
+        if(barrel(node.left)){
+            node.left = null;
+        }
+        if(barrel(node.right)){
+            node.right = null;
+        }
+    }
+    delNode(root);
+    return barrel(root)?null:root;
+};
