@@ -1,0 +1,26 @@
+/*
+Given a binary tree, return the sum of values of its deepest leaves.
+*/
+var deepestLeavesSum = function(root) {
+    let map = new Map();
+    let max = 0;
+    function levelOrder(node,level){
+        if(!node){
+            return;
+        }
+        if(!node.left && !node.right){
+            if(!map.has(level)){
+                map.set(level,[node.val])
+            }else{
+                map.get(level)[0]+=node.val;
+            }
+        }
+        levelOrder(node.left,level+1);
+        levelOrder(node.right,level+1);
+    }
+    levelOrder(root,1);
+    for(let key of map.keys()){
+        max = Math.max(max,key)
+    }
+    return map.get(max);
+};
