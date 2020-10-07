@@ -1,0 +1,38 @@
+/*
+Given an integer array with no duplicates. A maximum tree building on this array is defined as follow:
+
+The root is the maximum number in the array.
+The left subtree is the maximum tree constructed from left part subarray divided by the maximum number.
+The right subtree is the maximum tree constructed from right part subarray divided by the maximum number.
+Construct the maximum tree by the given array and output the root node of this tree.
+
+*/
+var constructMaximumBinaryTree = function(nums) {
+    let result = new TreeNode();
+    
+    function build(node,array){
+        if(array.length === 0){
+            return null;
+        }
+        let max = -Infinity;
+        let index = 0;
+        for(let i=0; i<array.length;i++){
+            if(array[i]>max){
+                max = array[i];
+                index = i;
+            }
+        }
+        node.val = max;
+     
+        if(node){
+            node.left = build(new TreeNode(),array.slice(0,index));
+        node.right = build(new TreeNode(), array.slice(index+1,array.length));
+        }
+        return node;
+    }
+    build(result, nums);
+    return result;
+    
+};
+=========================================================================================================================
+//use pointers
