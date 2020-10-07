@@ -1,0 +1,21 @@
+/*
+Given a binary search tree, rearrange the tree in in-order so that the leftmost node
+in the tree is now the root of the tree, and every node has no left child and only 1 right child.
+*/
+var increasingBST = function(root) {
+    let prev = new TreeNode(0);
+    let result = prev;
+    
+    function inOrder(node){
+        if(!node){
+            return;
+        }
+        inOrder(node.left);
+        prev.right = new TreeNode(node.val);
+        prev = prev.right;
+        inOrder(node.right);
+        
+    }
+    inOrder(root);
+    return result.right;
+};
