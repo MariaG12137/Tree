@@ -1,0 +1,10 @@
+/*
+Return the root node of a binary search tree that matches the given preorder traversal.
+*/
+var bstFromPreorder = function(preorder) {
+    if(!preorder.length)return null;
+    let node = new TreeNode(preorder[0])
+    node.left = bstFromPreorder(preorder.filter(el=>el<preorder[0]))
+    node.right = bstFromPreorder(preorder.filter(el=>el>preorder[0]))
+    return node
+};
