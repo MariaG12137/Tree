@@ -1,0 +1,21 @@
+/*
+Given a binary tree, flatten it to a linked list in-place.
+*/
+var flatten = function(root) {
+    let last = null;
+    
+    function preOrder(node){
+        if(node){
+            if(last){
+                last.left = null;
+                last.right = node;
+            }
+            last = node;
+            const right = node.right;
+            
+            preOrder(node.left);
+            preOrder(right);
+        }
+    }
+    preOrder(root);
+};
