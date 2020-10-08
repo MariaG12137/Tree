@@ -1,0 +1,25 @@
+/*
+Given a binary tree root, a node X in the tree is named good if in the path from root to X there are no nodes with a value greater than X.
+
+Return the number of good nodes in the binary tree.
+
+*/
+var goodNodes = function(root) {
+    let result = 0;
+    
+    function preOrder(node,max){
+        if(!node){
+            return;
+        }
+
+        if(node.val>=max){
+            result++;
+            max = node.val;
+        }
+        
+        preOrder(node.left,max);
+        preOrder(node.right,max);
+    }
+    preOrder(root,root.val);
+    return result;
+};
