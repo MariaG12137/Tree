@@ -1,0 +1,49 @@
+/*
+Given a binary tree where node values are digits from 1 to 9. A path in the binary tree is said to be pseudo-palindromic if at least one permutation of the node values in the path is a palindrome.
+
+Return the number of pseudo-palindromic paths going from the root node to leaf nodes.
+*/
+var pseudoPalindromicPaths  = function(root) {
+    let map = new Map();
+    map.set(1,0).set(2,0).set(3,0).set(4,0).set(5,0).set(6,0).set(7,0).set(8,0).set(9,0)
+
+    function isPalindrom(array){
+        for(let entry of map.entries()){
+            if(entry[1] !==0){
+                map.set(entry[0],0)
+            }
+        }
+        
+        for(let num of array){
+            map.set(num,map.get(num)+1);
+        }
+
+        let odd = 0;
+        for(let value of map.values()){
+            if(value%2===1){
+                if(odd===0){
+                    odd++;
+                }else{
+                    return false;
+                }
+            }
+        }
+        return true; 
+    }
+    
+    let result = [];
+    let count = 0;
+    function traverse(node,ans){
+        if(!node){
+            return 0;
+        }
+        ans = ans.concat(node.val);
+ 
+        if(!node.left && !node.right){
+            return isPalindrom(ans)?1:0
+        }
+        return traverse(node.left,ans)+traverse(node.right, ans);
+    }
+    return traverse(root,[]);
+    
+};
