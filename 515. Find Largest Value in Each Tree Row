@@ -1,0 +1,19 @@
+/*
+Given the root of a binary tree, return an array of the largest value in each row of the tree (0-indexed).
+*/
+var largestValues = function(root) {
+    let result = [];
+    function levelOrder(node,level){
+        if(!node){
+            return;
+        }
+        if(result[level]===undefined){
+            result[level] = -Infinity;
+        }        
+        result[level] = Math.max(result[level],node.val);
+        levelOrder(node.left,level+1);
+        levelOrder(node.right,level+1);
+    }
+    levelOrder(root,0);
+    return result;
+};
