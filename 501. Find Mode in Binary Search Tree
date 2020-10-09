@@ -1,0 +1,39 @@
+/*
+501. Find Mode in Binary Search Tree
+*/
+var findMode = function(root) {
+    if(!root){
+        return [];
+    }
+    let map = new Map();
+    let prev = root;
+    map.set(root.val,1);
+    
+    function inOrder(node){
+        if(!node){
+            return;
+        }
+        inOrder(node.left);
+        if(prev !== node){
+            if(node.val !== prev.val){
+                map.set(node.val,1)
+            }else{
+                map.set(node.val,map.get(node.val)+1)
+            }
+            prev = node;
+        }
+        inOrder(node.right);
+    }
+    inOrder(root);
+    let max = 0;
+    let result = [];
+    for(let value of map.values()){
+        max = Math.max(max,value);
+    }
+    for(let entry of map.entries()){
+        if(entry[1]===max){
+            result.push(entry[0]);
+        }
+    }
+    return result;
+};
