@@ -1,0 +1,27 @@
+/*
+Given a binary tree, determine if it is a valid binary search tree (BST).
+*/
+var isValidBST = function(root) {
+    let prev = null;
+    let result = true;
+    function inOrder(node){
+  
+        if(!node){
+            return;
+        }
+        inOrder(node.left);
+        if(prev===null){
+            prev=node.val;
+        }else{
+            if(prev>=node.val){
+                result = false;
+                
+            }
+            prev = node.val;
+        }
+        
+        inOrder(node.right);
+    }
+    inOrder(root);
+    return result;
+};
