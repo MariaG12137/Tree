@@ -1,0 +1,21 @@
+/*
+Given a binary tree, find the leftmost value in the last row of the tree.
+*/
+var findBottomLeftValue = function(root) {
+    let result = [];
+    function levelOrder(node,level){
+        if(!node){
+            return;
+        }
+        if(!result[level]){
+            result[level]=[];
+        }
+        if(!node.left && !node.right){
+            result[level].push(node.val)
+        }
+        levelOrder(node.left,level+1);
+        levelOrder(node.right,level+1);
+    }
+    levelOrder(root,0);
+    return result[result.length-1][0]
+};
