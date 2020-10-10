@@ -1,0 +1,48 @@
+/*
+We are given a binary tree (with root node root), a target node, and an integer value K.
+
+Return a list of the values of all nodes that have a distance K from the target node.  The answer can be returned in any order.
+*/
+var distanceK = function(root, target, K) {
+    let result = [];
+    
+    function findChild(node,level){
+        if(!node){
+            return;
+        }
+        if(level===0){
+            result.push(node.val)
+        }
+        findChild(node.left,level-1);
+        findChild(node.right,level-1);
+    }
+    
+    function findNode(node){
+        if(!node){
+            return 0;
+        }
+        if(node === target){
+            return 1;
+        }
+        let left = findNode(node.left);
+        let right = findNode(node.right);
+
+        if(left !== 0){
+            node.left = null;
+            findChild(node,K-left)
+        }
+        if(right !== 0){
+            node.right = null;
+            findChild(node, K-right)
+        }
+
+        if(left+right>0){
+            return left+right+1;
+        }else{
+            return 0;
+        }
+    }
+    findChild(target,K);
+    findNode(root);
+    return result;
+};
