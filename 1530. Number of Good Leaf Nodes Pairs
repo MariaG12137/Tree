@@ -1,0 +1,38 @@
+/*
+Given the root of a binary tree and an integer distance. A pair of two different leaf nodes of a binary tree is said to be good if the length of the shortest path between them is less than or equal to distance.
+
+Return the number of good leaf node pairs in the tree.
+
+ 
+*/
+var countPairs = function(root, distance) {
+    let result = 0;
+    function postOrder(node){
+        if(!node){
+            return null;
+        }
+        if(!node.left && !node.right){
+            return [1];
+        }
+        
+        let left = postOrder(node.left);
+        let right = postOrder(node.right);
+        
+        if(!node.left || !node.right){
+            if(left) return left.map(v => v+1);
+            return right.map(v => v+1);
+        }
+        
+        for(let l of left){
+            for(let r of right){
+                if(l+r<=distance){
+                    result++;
+                }
+            }
+        }
+        
+        return [...left,...right].map(v=>v+1);
+    }
+    postOrder(root);
+    return result;
+};
