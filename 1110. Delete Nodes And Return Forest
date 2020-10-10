@@ -1,0 +1,50 @@
+/*
+Given the root of a binary tree, each node in the tree has a distinct value.
+
+After deleting all nodes with a value in to_delete, we are left with a forest (a disjoint union of trees).
+
+Return the roots of the trees in the remaining forest.  You may return the result in any order.
+
+*/
+var delNodes = function(root, to_delete) {
+    let result = [];
+    
+    function checkNode(node, target){
+        if(node.left && target.includes(node.left.val)){
+            if(node.left.left){
+                result.push(node.left.left);
+            }
+            if(node.left.right){
+                result.push(node.left.right);
+            }
+            node.left = null;
+        }
+        if(node.right && target.includes(node.right.val)){
+            if(node.right.left){
+                result.push(node.right.left)
+            }
+            if(node.right.right){
+                result.push(node.right.right);
+            }
+            node.right = null;
+        }
+    }
+
+    function remove(node,target){
+        if(!node){
+            return;
+        }
+        remove(node.left,target);
+        remove(node.right, target);
+        checkNode(node,target);
+    }
+    remove(root,to_delete);
+    
+    if(to_delete.includes(root.val)){
+        if(root.left) result.push(root.left);
+        if(root.right) result.push(root.right);
+    }else{
+        result.push(root);
+    }
+    return result;
+};
