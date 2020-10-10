@@ -1,0 +1,16 @@
+/*
+Given a binary tree, imagine yourself standing on the right side of it, return the values of the nodes you can see ordered from top to bottom.
+*/
+var rightSideView = function(root) {
+    let result = [];
+    function levelOrder(node,level){
+        if(!node){
+            return;
+        }
+        result[level]=node.val;
+        levelOrder(node.left,level+1);
+        levelOrder(node.right,level+1);
+    }
+    levelOrder(root,0);
+    return result;
+};
