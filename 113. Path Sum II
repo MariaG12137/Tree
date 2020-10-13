@@ -1,0 +1,21 @@
+/*
+Given a binary tree and a sum, find all root-to-leaf paths where each path's sum equals the given sum.
+*/
+var pathSum = function(root, sum) {
+    let result = [];
+    function nodeSum(node,total,path){
+        if(!node){
+            return;
+        }
+        total = total+node.val;
+        path.push(node.val);
+        
+        if(!node.left && !node.right && total===sum){
+            result.push(path);
+        }
+        nodeSum(node.left,total,[...path]);
+        nodeSum(node.right,total,[...path]);
+    }
+    nodeSum(root,0,[]);
+    return result;
+};
