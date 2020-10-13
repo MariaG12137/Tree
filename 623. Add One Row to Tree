@@ -1,0 +1,30 @@
+/*
+Given the root of a binary tree, then value v and depth d,
+you need to add a row of nodes with value v at the given depth d. The root node is at depth 1.
+*/
+var addOneRow = function(root, v, d) {
+    if(d===1){
+        let left = new TreeNode(v);
+        left.left = root;
+        return left;
+    }
+    
+    function preOrder(node,level){
+        if(!node){
+            return;
+        }
+        if(level===d-1){
+            let left = node.left;
+            let right = node.right;
+            node.left = new TreeNode(v);
+            node.right = new TreeNode(v);
+            node.left.left = left;
+            node.right.right = right;
+        }
+        preOrder(node.left,level+1);
+        preOrder(node.right,level+1);
+        
+    }
+    preOrder(root,1);
+    return root;
+};
