@@ -1,0 +1,16 @@
+/*
+Given a complete binary tree, count the number of nodes.
+*/
+var countNodes = function(root) {
+    let count = 0;
+    function countN(node){
+        if(!node){
+            return;
+        }
+        count++;
+        countN(node.left);
+        countN(node.right);
+    }
+    countN(root);
+    return count;
+};
