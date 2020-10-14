@@ -35,4 +35,26 @@ var constructMaximumBinaryTree = function(nums) {
     
 };
 =========================================================================================================================
-//use pointers
+var constructMaximumBinaryTree = function(nums) {
+    let result = [];
+    function build(l,r){
+        
+        if(l>r){
+            return null;
+        }
+        let mid = null;
+        let max = -Infinity;
+        for(let i=l;i<r+1;i++){
+            if(nums[i]>max){
+                mid = i;
+                max = nums[i];
+            }
+        }
+        
+        let newNode = new TreeNode(nums[mid]);
+        newNode.left = build(l,mid-1);
+        newNode.right = build(mid+1,r)
+        return newNode;
+    }
+    return build(0,nums.length-1);    
+};
