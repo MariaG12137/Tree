@@ -1,0 +1,29 @@
+/*
+Given the root of a binary tree, return all duplicate subtrees.
+
+For each kind of duplicate subtrees, you only need to return the root node of any one of them.
+
+Two trees are duplicate if they have the same structure with the same node values.
+*/
+var findDuplicateSubtrees = function(root) {
+    let map = new Map();
+    let result = [];
+    function preOrder(node,path){
+        if(!node){
+            return '#';
+        }
+        path = node.val + ','+ preOrder(node.left)+','+preOrder(node.right);
+        
+        if(!map.has(path)){
+            map.set(path,1)
+        }else{
+            map.set(path,map.get(path)+1);
+            if(map.get(path)===2){
+                result.push(node)
+            }
+        }
+        return path;
+    }
+    preOrder(root,'');
+    return result;
+};
