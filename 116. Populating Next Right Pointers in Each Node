@@ -1,0 +1,20 @@
+/*
+You are given a perfect binary tree where all leaves are on the same level,
+and every parent has two children. The binary tree has the following definition:
+*/
+var connect = function(root) {
+    let prev = [];
+    function levelOrder(node,level){
+        if(!node){
+            return;
+        }
+        if(prev[level] !== undefined){
+            prev[level].next = node;
+        }
+        prev[level] = node;
+        levelOrder(node.left,level+1);
+        levelOrder(node.right,level+1);
+    }
+    levelOrder(root,0);
+    return root;
+};
