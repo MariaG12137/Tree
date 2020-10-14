@@ -1,0 +1,26 @@
+/*
+Given a rooted binary tree, return the lowest common ancestor of its deepest leaves.
+*/
+var lcaDeepestLeaves = function(root) {
+    let maxDepth = 0;
+    let lca = null;
+    
+    dfs(root, 0);
+    
+    return lca;
+    
+    function dfs(node, depth) {
+        if (node == null) return depth - 1;
+        
+        maxDepth = Math.max(maxDepth, depth);
+        
+        const leftMaxDepth = dfs(node.left, depth + 1);
+        const rightMaxDepth = dfs(node.right, depth + 1);
+        
+        if (leftMaxDepth == maxDepth && rightMaxDepth == maxDepth) {
+            lca = node;
+        }
+        
+        return Math.max(leftMaxDepth, rightMaxDepth);
+    }
+};
