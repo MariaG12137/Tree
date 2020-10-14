@@ -1,0 +1,33 @@
+/*
+In a binary tree, the root node is at depth 0, and children of each depth k node are at depth k+1.
+
+Two nodes of a binary tree are cousins if they have the same depth, but have different parents.
+
+We are given the root of a binary tree with unique values, and the values x and y of two different nodes in the tree.
+
+Return true if and only if the nodes corresponding to the values x and y are cousins.
+
+ 
+*/
+var isCousins = function(root, x, y) {
+    let result = [];
+    function levelTraverse(node,level,parent){
+        if(!node){
+            return;
+        }
+        
+        if(node.val === x|| node.val===y){
+            if(result.length===0){
+                result[0]=[level, parent];
+            }else{
+                result.push([level,parent]);
+            }
+        }
+        levelTraverse(node.left,level+1,node);
+        levelTraverse(node.right,level+1,node);
+    }
+    levelTraverse(root,0,0);
+    console.log(result);
+    return result[0][0]===result[1][0] && result[0][1] !== result[1][1]?true:false;
+    
+};
