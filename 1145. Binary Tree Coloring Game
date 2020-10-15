@@ -1,0 +1,27 @@
+var btreeGameWinningMove = function(root, n, x) {
+    
+    function count(node){
+        if(!node){
+            return 0;
+        }
+        return 1+count(node.left)+count(node.right);
+    }
+
+    let left = 0;
+    let right = 0;
+    function findX(node){
+        if(!node){
+            return;
+        }
+        if(node.val===x){
+            left = count(node.left);
+            right = count(node.right)
+        }
+        findX(node.left);
+        findX(node.right);
+    }
+    findX(root);
+    const win = Math.floor(n/2)
+    return (n-1-left-right > win) || left>win || right> win;
+    
+};
