@@ -1,0 +1,47 @@
+/*Given a binary tree root. Split the binary tree into two subtrees by removing 1 edge such that the product of the sums of the subtrees are maximized.
+
+Since the answer may be too large, return it modulo 10^9 + 7.*/
+
+/**
+ * Definition for a binary tree node.
+ * function TreeNode(val, left, right) {
+ *     this.val = (val===undefined ? 0 : val)
+ *     this.left = (left===undefined ? null : left)
+ *     this.right = (right===undefined ? null : right)
+ * }
+ */
+/**
+ * @param {TreeNode} root
+ * @return {number}
+ */
+var maxProduct = function(root) {
+    const MOD = 1e9 + 7;
+    let total = 0;
+    function sum(node){
+        if(!node){
+            return;
+        }
+        total+=node.val;
+        sum(node.left);
+        sum(node.right);  
+    }
+    sum(root);
+    
+    let result = 0;
+    function postOrder(node){
+        if(!node){
+            return 0;
+        }
+        
+        let left = postOrder(node.left);
+        let right = postOrder(node.right);
+        
+        const sum = (node.val + left + right) % MOD;
+        
+        const prod = (total - sum) * sum;
+        result = Math.max(prod, result);
+        return sum;
+    }
+    postOrder(root);
+    return result%MOD;
+};
